@@ -339,7 +339,8 @@ class LMDataset(object):
         self._shuffle_on_load = shuffle_on_load
         self._use_char_inputs = hasattr(vocab, 'encode_chars')
 
-        self._ids = self._load_random_shard()
+        #self._ids = self._load_random_shard()
+        self._ids = self._load_order_shard()
 
     def _choose_random_shard(self):
         if len(self._shards_to_choose) == 0:
@@ -361,6 +362,31 @@ class LMDataset(object):
         else:
             # just pick a random shard
             shard_name = self._choose_random_shard()
+
+        ids = self._load_shard(shard_name)
+        self._i = 0
+        self._nids = len(ids)
+        return ids
+
+    def _choose_order_shard(self):
+        if len(self._shards_to_choose) == 0:
+            self._shards_to_choose = list(self._all_shards)
+        shard_name = self._shards_to_choose.pop()
+        return shard_name
+
+    def _load_order_shard(self):
+        """Orderly select a file and read it."""
+        if self._test:
+            if len(self._all_shards) == 0:
+                # we've loaded all the data
+                # this will propogate up to the generator in get_batch
+                # and stop iterating
+                raise StopIteration
+            else:
+                shard_name = self._all_shards.pop()
+        else:
+            # just pick a order shard
+            shard_name = self._choose_order_shard()
 
         ids = self._load_shard(shard_name)
         self._i = 0
@@ -407,7 +433,8 @@ class LMDataset(object):
     def get_sentence(self):
         while True:
             if self._i == self._nids:
-                self._ids = self._load_random_shard()
+                # self._ids = self._load_random_shard()
+                self._ids = self._load_order_shard()
             ret = self._ids[self._i]
             self._i += 1
             yield ret

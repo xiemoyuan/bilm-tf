@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/docker/Upgrade_ELMo/bilm-tf')
 
 import argparse
 
@@ -13,7 +15,7 @@ def main(args):
 
     # define the options
     batch_size = 128  # batch size for each GPU
-    n_gpus = 3
+    n_gpus = 1
 
     # number of tokens in training data (this for 1B Word Benchmark)
     n_train_tokens = 768648884
@@ -56,7 +58,7 @@ def main(args):
 
     prefix = args.train_prefix
     data = BidirectionalLMDataset(prefix, vocab, test=False,
-                                      shuffle_on_load=True)
+                                      shuffle_on_load=False)
 
     tf_save_dir = args.save_dir
     tf_log_dir = args.save_dir

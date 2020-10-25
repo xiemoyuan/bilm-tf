@@ -413,6 +413,7 @@ class LanguageModel(object):
                         lstm_cell,
                         tf.unstack(lstm_input, axis=1),
                         initial_state=self.init_lstm_state[-1])
+                print('final_state: ', final_state)
                 self.final_lstm_state.append(final_state)
 
             # (batch_size * unroll_steps, 512)
@@ -704,6 +705,7 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
                     #   lstm states
                     model = LanguageModel(options, True)
                     loss = model.total_loss
+                    #tf.print(loss, [loss])
                     models.append(model)
                     # get gradients
                     grads = opt.compute_gradients(
@@ -713,6 +715,7 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
                     tower_grads.append(grads)
                     # keep track of loss across all GPUs
                     train_perplexity += loss
+                    #train_perplexity = tf.print(train_perplexity, ['add: ', train_perplexity])
 
         print_variable_summary()
 
@@ -725,7 +728,7 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
         train_perplexity = tf.exp(train_perplexity / n_gpus)
         perplexity_summmary = tf.summary.scalar(
             'train_perplexity', train_perplexity)
-
+        #train_perplexity = tf.print(train_perplexity, ['exp: ', train_perplexity])
         # some histogram summaries.  all models use the same parameters
         # so only need to summarize one
         histogram_summaries = [
@@ -839,6 +842,8 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
 
             # slice the input in the batch for the feed_dict
             X = batch
+            if batch_no % 10 == 0: print(X['next_token_id'])
+
             feed_dict = {t: v for t, v in zip(
                                         init_state_tensors, init_state_values)}
             for k in range(n_gpus):
@@ -875,16 +880,15 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
                                                 final_state_tensors,
                     feed_dict=feed_dict
                 )
-                init_state_values = ret[4:]
-                
+                init_state_values = ret[4:]                
 
             if batch_no % 1250 == 0:
                 summary_writer.add_summary(ret[3], batch_no)
-            if batch_no % 100 == 0:
+            if batch_no % 10 == 0:
                 # write the summaries to tensorboard and display perplexity
                 summary_writer.add_summary(ret[1], batch_no)
-                print("Batch %s, train_perplexity=%s" % (batch_no, ret[2]))
-                print("Total time: %s" % (time.time() - t1))
+                print("Batch %s, train_perplexity=%s\n" % (batch_no, ret[2]))
+                #print("Total time: %s" % (time.time() - t1))
 
             if (batch_no % 1250 == 0) or (batch_no == n_batches_total):
                 # save the model
