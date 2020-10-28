@@ -1,0 +1,492 @@
+nohup: ignoring input
+/docker/Upgrade_ELMo/py36_bilm-tf/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:523: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/docker/Upgrade_ELMo/py36_bilm-tf/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:524: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/docker/Upgrade_ELMo/py36_bilm-tf/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/docker/Upgrade_ELMo/py36_bilm-tf/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:526: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/docker/Upgrade_ELMo/py36_bilm-tf/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:527: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/docker/Upgrade_ELMo/py36_bilm-tf/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:532: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+WARNING:tensorflow:From /docker/Upgrade_ELMo/bilm-tf/bilm/training.py:217: calling squeeze (from tensorflow.python.ops.array_ops) with squeeze_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the `axis` argument instead
+WARNING:tensorflow:Variable += will be deprecated. Use variable.assign_add if you want assignment to the variable value or 'x = x + y' if you want a new python Tensor object.
+WARNING:tensorflow:From /docker/Upgrade_ELMo/py36_bilm-tf/lib/python3.6/site-packages/tensorflow/python/util/tf_should_use.py:118: initialize_all_variables (from tensorflow.python.ops.variables) is deprecated and will be removed after 2017-03-02.
+Instructions for updating:
+Use `tf.global_variables_initializer` instead.
+2020-10-28 03:39:26.803096: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-10-28 03:39:26.990178: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1392] Found device 0 with properties: 
+name: Tesla P40 major: 6 minor: 1 memoryClockRate(GHz): 1.531
+pciBusID: 0000:06:00.0
+totalMemory: 22.38GiB freeMemory: 22.23GiB
+2020-10-28 03:39:26.990260: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1471] Adding visible gpu devices: 0
+2020-10-28 03:39:27.403288: I tensorflow/core/common_runtime/gpu/gpu_device.cc:952] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-10-28 03:39:27.403372: I tensorflow/core/common_runtime/gpu/gpu_device.cc:958]      0 
+2020-10-28 03:39:27.403388: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971] 0:   N 
+2020-10-28 03:39:27.403545: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1084] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 21568 MB memory) -> physical GPU (device: 0, name: Tesla P40, pci bus id: 0000:06:00.0, compute capability: 6.1)
+WARNING:tensorflow:Issue encountered when serializing lstm_output_embeddings.
+Type is unsupported, or the types of the items don't match field type in CollectionDef. Note this is a warning and probably safe to ignore.
+'list' object has no attribute 'name'
+WARNING:tensorflow:Issue encountered when serializing lstm_output_embeddings.
+Type is unsupported, or the types of the items don't match field type in CollectionDef. Note this is a warning and probably safe to ignore.
+'list' object has no attribute 'name'
+Found 51 shards at /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/*
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00010-of-00050
+Loaded 6111 sentences.
+Finished loading
+Found 51 shards at /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/*
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00010-of-00050
+Loaded 6111 sentences.
+Finished loading
+final_state:  LSTMStateTuple(c=<tf.Tensor 'lm/RNN_0/rnn/lstm_cell/add_39:0' shape=(128, 512) dtype=float32>, h=<tf.Tensor 'lm/RNN_0/rnn/lstm_cell/mul_59:0' shape=(128, 512) dtype=float32>)
+final_state:  LSTMStateTuple(c=<tf.Tensor 'lm/RNN_1/rnn/lstm_cell/add_39:0' shape=(128, 512) dtype=float32>, h=<tf.Tensor 'lm/RNN_1/rnn/lstm_cell/mul_59:0' shape=(128, 512) dtype=float32>)
+[['global_step:0', TensorShape([])],
+ ['lm/CNN/W_cnn_0:0',
+  TensorShape([Dimension(1), Dimension(1), Dimension(16), Dimension(32)])],
+ ['lm/CNN/W_cnn_1:0',
+  TensorShape([Dimension(1), Dimension(2), Dimension(16), Dimension(32)])],
+ ['lm/CNN/W_cnn_2:0',
+  TensorShape([Dimension(1), Dimension(3), Dimension(16), Dimension(64)])],
+ ['lm/CNN/W_cnn_3:0',
+  TensorShape([Dimension(1), Dimension(4), Dimension(16), Dimension(128)])],
+ ['lm/CNN/W_cnn_4:0',
+  TensorShape([Dimension(1), Dimension(5), Dimension(16), Dimension(256)])],
+ ['lm/CNN/W_cnn_5:0',
+  TensorShape([Dimension(1), Dimension(6), Dimension(16), Dimension(512)])],
+ ['lm/CNN/W_cnn_6:0',
+  TensorShape([Dimension(1), Dimension(7), Dimension(16), Dimension(1024)])],
+ ['lm/CNN/b_cnn_0:0', TensorShape([Dimension(32)])],
+ ['lm/CNN/b_cnn_1:0', TensorShape([Dimension(32)])],
+ ['lm/CNN/b_cnn_2:0', TensorShape([Dimension(64)])],
+ ['lm/CNN/b_cnn_3:0', TensorShape([Dimension(128)])],
+ ['lm/CNN/b_cnn_4:0', TensorShape([Dimension(256)])],
+ ['lm/CNN/b_cnn_5:0', TensorShape([Dimension(512)])],
+ ['lm/CNN/b_cnn_6:0', TensorShape([Dimension(1024)])],
+ ['lm/CNN_proj/W_proj:0', TensorShape([Dimension(2048), Dimension(512)])],
+ ['lm/CNN_proj/b_proj:0', TensorShape([Dimension(512)])],
+ ['lm/RNN_0/rnn/lstm_cell/bias:0', TensorShape([Dimension(2048)])],
+ ['lm/RNN_0/rnn/lstm_cell/kernel:0',
+  TensorShape([Dimension(1024), Dimension(2048)])],
+ ['lm/RNN_1/rnn/lstm_cell/bias:0', TensorShape([Dimension(2048)])],
+ ['lm/RNN_1/rnn/lstm_cell/kernel:0',
+  TensorShape([Dimension(1024), Dimension(2048)])],
+ ['lm/char_embed:0', TensorShape([Dimension(261), Dimension(16)])],
+ ['lm/softmax/W:0', TensorShape([Dimension(150000), Dimension(512)])],
+ ['lm/softmax/b:0', TensorShape([Dimension(150000)])],
+ ['train_loss:0', TensorShape([])],
+ ['train_perplexity:0', TensorShape([])]]
+Training for 10 epochs and 3002530 batches
+Batch 0, train_perplexity=149680.72, train_loss=11.91626
+
+Batch 10, train_perplexity=13935.573, train_loss=9.5422
+
+Batch 20, train_perplexity=4294.1436, train_loss=8.365007
+
+Batch 30, train_perplexity=3824.196, train_loss=8.249104
+
+Batch 40, train_perplexity=3328.548, train_loss=8.1102915
+
+Batch 50, train_perplexity=2847.312, train_loss=7.9541306
+
+Batch 60, train_perplexity=2346.9768, train_loss=7.7608833
+
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00035-of-00050
+Loaded 6113 sentences.
+Finished loading
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00035-of-00050
+Loaded 6113 sentences.
+Finished loading
+Batch 70, train_perplexity=2001.0247, train_loss=7.6014147
+
+Batch 80, train_perplexity=2059.433, train_loss=7.630186
+
+Batch 90, train_perplexity=1996.2206, train_loss=7.599011
+
+Batch 100, train_perplexity=1744.6309, train_loss=7.4642982
+
+Batch 110, train_perplexity=1768.976, train_loss=7.478156
+
+Batch 120, train_perplexity=1590.9498, train_loss=7.3720865
+
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00002-of-00050
+Loaded 6071 sentences.
+Finished loading
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00002-of-00050
+Loaded 6071 sentences.
+Finished loading
+Batch 130, train_perplexity=1546.3531, train_loss=7.3436546
+
+Batch 140, train_perplexity=1574.4285, train_loss=7.3616476
+
+Batch 150, train_perplexity=1574.1965, train_loss=7.3615003
+
+Batch 160, train_perplexity=1397.5, train_loss=7.24244
+
+Batch 170, train_perplexity=1480.0094, train_loss=7.2998037
+
+Batch 180, train_perplexity=1388.5891, train_loss=7.2360435
+
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00042-of-00050
+Loaded 6090 sentences.
+Finished loading
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00042-of-00050
+Loaded 6090 sentences.
+Finished loading
+Batch 190, train_perplexity=1354.6068, train_loss=7.2112665
+
+Batch 200, train_perplexity=1289.9224, train_loss=7.1623373
+
+Batch 210, train_perplexity=1344.319, train_loss=7.203643
+
+Batch 220, train_perplexity=1321.4506, train_loss=7.1864853
+
+Batch 230, train_perplexity=1221.0375, train_loss=7.107456
+
+Batch 240, train_perplexity=1180.134, train_loss=7.0733833
+
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00027-of-00050
+Loaded 6283 sentences.
+Finished loading
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en.heldout-00027-of-00050
+Loaded 6283 sentences.
+Finished loading
+Batch 250, train_perplexity=1109.9398, train_loss=7.012061
+
+Batch 260, train_perplexity=1117.9957, train_loss=7.019293
+
+Batch 270, train_perplexity=1187.4622, train_loss=7.0795736
+
+Batch 280, train_perplexity=1124.7035, train_loss=7.0252748
+
+Batch 290, train_perplexity=1040.1188, train_loss=6.94709
+
+Batch 300, train_perplexity=1124.1185, train_loss=7.0247545
+
+Batch 310, train_perplexity=1170.9714, train_loss=7.065589
+
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en-00000-of-00100
+Loaded 306688 sentences.
+Finished loading
+Loading data from: /docker/Upgrade_ELMo/datasets/1-billion-word-language-modeling-benchmark-r13output/heldout-monolingual.tokenized.shuffled/news.en-00000-of-00100
+Loaded 306688 sentences.
+Finished loading
+Batch 320, train_perplexity=902.2792, train_loss=6.804924
+
+Batch 330, train_perplexity=1152.2039, train_loss=7.049432
+
+Batch 340, train_perplexity=1021.9172, train_loss=6.9294357
+
+Batch 350, train_perplexity=1007.3651, train_loss=6.9150934
+
+Batch 360, train_perplexity=920.6043, train_loss=6.8250303
+
+Batch 370, train_perplexity=977.24744, train_loss=6.88474
+
+Batch 380, train_perplexity=1040.5746, train_loss=6.9475284
+
+Batch 390, train_perplexity=999.8623, train_loss=6.9076176
+
+Batch 400, train_perplexity=1050.0465, train_loss=6.9565897
+
+Batch 410, train_perplexity=976.74805, train_loss=6.8842287
+
+Batch 420, train_perplexity=904.2394, train_loss=6.807094
+
+Batch 430, train_perplexity=964.5095, train_loss=6.8716197
+
+Batch 440, train_perplexity=856.4988, train_loss=6.752853
+
+Batch 450, train_perplexity=880.3388, train_loss=6.780307
+
+Batch 460, train_perplexity=877.8564, train_loss=6.777483
+
+Batch 470, train_perplexity=948.7175, train_loss=6.855111
+
+Batch 480, train_perplexity=961.44354, train_loss=6.868436
+
+Batch 490, train_perplexity=865.06903, train_loss=6.7628093
+
+Batch 500, train_perplexity=878.08997, train_loss=6.777749
+
+Batch 510, train_perplexity=781.5538, train_loss=6.661284
+
+Batch 520, train_perplexity=939.6654, train_loss=6.845524
+WARNING:tensorflow:Issue encountered when serializing lstm_output_embeddings.
+Type is unsupported, or the types of the items don't match field type in CollectionDef. Note this is a warning and probably safe to ignore.
+'list' object has no attribute 'name'
+
+Batch 530, train_perplexity=835.2063, train_loss=6.727679
+
+Batch 540, train_perplexity=819.375, train_loss=6.708542
+
+Batch 550, train_perplexity=773.621, train_loss=6.651082
+
+Batch 560, train_perplexity=987.9021, train_loss=6.8955836
+
+Batch 570, train_perplexity=884.70184, train_loss=6.7852507
+
+Batch 580, train_perplexity=842.9181, train_loss=6.73687
+
+Batch 590, train_perplexity=824.097, train_loss=6.714288
+
+Batch 600, train_perplexity=789.7005, train_loss=6.6716537
+
+Batch 610, train_perplexity=813.803, train_loss=6.7017183
+
+Batch 620, train_perplexity=809.76025, train_loss=6.6967382
+
+Batch 630, train_perplexity=838.56396, train_loss=6.731691
+
+Batch 640, train_perplexity=736.4336, train_loss=6.601819
+
+Batch 650, train_perplexity=800.3843, train_loss=6.685092
+
+Batch 660, train_perplexity=716.13367, train_loss=6.573867
+
+Batch 670, train_perplexity=789.7396, train_loss=6.6717033
+
+Batch 680, train_perplexity=947.43274, train_loss=6.853756
+
+Batch 690, train_perplexity=819.87213, train_loss=6.7091484
+
+Batch 700, train_perplexity=699.4724, train_loss=6.5503263
+
+Batch 710, train_perplexity=831.0981, train_loss=6.722748
+
+Batch 720, train_perplexity=757.8168, train_loss=6.6304417
+
+Batch 730, train_perplexity=767.0752, train_loss=6.642585
+
+Batch 740, train_perplexity=816.7069, train_loss=6.7052803
+
+Batch 750, train_perplexity=732.3483, train_loss=6.5962563
+
+Batch 760, train_perplexity=711.28, train_loss=6.567066
+
+Batch 770, train_perplexity=735.3654, train_loss=6.6003675
+
+Batch 780, train_perplexity=711.4262, train_loss=6.5672717
+
+Batch 790, train_perplexity=683.85065, train_loss=6.5277395
+
+Batch 800, train_perplexity=749.0001, train_loss=6.618739
+
+Batch 810, train_perplexity=716.8867, train_loss=6.574918
+
+Batch 820, train_perplexity=696.6551, train_loss=6.5462904
+
+Batch 830, train_perplexity=747.04974, train_loss=6.616132
+
+Batch 840, train_perplexity=677.694, train_loss=6.518696
+
+Batch 850, train_perplexity=750.47015, train_loss=6.6207
+
+Batch 860, train_perplexity=675.9925, train_loss=6.516182
+
+Batch 870, train_perplexity=720.6293, train_loss=6.580125
+
+Batch 880, train_perplexity=849.4089, train_loss=6.7445407
+
+Batch 890, train_perplexity=650.68054, train_loss=6.4780188
+
+Batch 900, train_perplexity=620.4114, train_loss=6.4303827
+
+Batch 910, train_perplexity=632.257, train_loss=6.449296
+
+Batch 920, train_perplexity=606.8203, train_loss=6.4082327
+
+Batch 930, train_perplexity=708.65295, train_loss=6.563366
+
+Batch 940, train_perplexity=654.1062, train_loss=6.4832697
+
+Batch 950, train_perplexity=683.2721, train_loss=6.526893
+
+Batch 960, train_perplexity=631.3878, train_loss=6.4479203
+
+Batch 970, train_perplexity=683.3441, train_loss=6.5269985
+
+Batch 980, train_perplexity=675.86804, train_loss=6.515998
+
+Batch 990, train_perplexity=677.59314, train_loss=6.518547
+
+Batch 1000, train_perplexity=646.8492, train_loss=6.472113
+
+Batch 1010, train_perplexity=744.09863, train_loss=6.6121736
+
+Batch 1020, train_perplexity=613.02783, train_loss=6.4184103
+
+Batch 1030, train_perplexity=563.97375, train_loss=6.3350077
+
+Batch 1040, train_perplexity=607.953, train_loss=6.4100976
+
+Batch 1050, train_perplexity=728.8993, train_loss=6.5915356
+
+Batch 1060, train_perplexity=649.7262, train_loss=6.476551
+
+Batch 1070, train_perplexity=681.1167, train_loss=6.5237336
+
+Batch 1080, train_perplexity=734.1161, train_loss=6.598667
+
+Batch 1090, train_perplexity=646.6638, train_loss=6.4718266
+
+Batch 1100, train_perplexity=622.99286, train_loss=6.434535
+
+Batch 1110, train_perplexity=636.0129, train_loss=6.455219
+
+Batch 1120, train_perplexity=577.0981, train_loss=6.358012
+
+Batch 1130, train_perplexity=649.7405, train_loss=6.476573
+
+Batch 1140, train_perplexity=660.23615, train_loss=6.4925976
+
+Batch 1150, train_perplexity=629.22986, train_loss=6.4444966
+
+Batch 1160, train_perplexity=600.3581, train_loss=6.3975263
+
+Batch 1170, train_perplexity=697.75116, train_loss=6.5478625
+
+Batch 1180, train_perplexity=588.2306, train_loss=6.377119
+
+Batch 1190, train_perplexity=618.702, train_loss=6.4276237
+
+Batch 1200, train_perplexity=611.6948, train_loss=6.4162335
+
+Batch 1210, train_perplexity=563.7151, train_loss=6.334549
+
+Batch 1220, train_perplexity=588.3035, train_loss=6.377243
+
+Batch 1230, train_perplexity=607.9846, train_loss=6.4101496
+
+Batch 1240, train_perplexity=587.3018, train_loss=6.375539
+
+Batch 1250, train_perplexity=665.4516, train_loss=6.500466
+
+Batch 1260, train_perplexity=573.5006, train_loss=6.351759
+
+Batch 1270, train_perplexity=605.5958, train_loss=6.406213
+
+Batch 1280, train_perplexity=555.4451, train_loss=6.31977
+
+Batch 1290, train_perplexity=597.6201, train_loss=6.3929553
+
+Batch 1300, train_perplexity=670.3897, train_loss=6.507859
+
+Batch 1310, train_perplexity=521.09174, train_loss=6.255926
+
+Batch 1320, train_perplexity=563.08453, train_loss=6.33343
+
+Batch 1330, train_perplexity=568.5624, train_loss=6.343111
+
+Batch 1340, train_perplexity=580.61176, train_loss=6.3640823
+
+Batch 1350, train_perplexity=588.11896, train_loss=6.3769293
+
+Batch 1360, train_perplexity=548.3587, train_loss=6.3069296
+
+Batch 1370, train_perplexity=511.058, train_loss=6.236483
+
+Batch 1380, train_perplexity=520.8421, train_loss=6.255447
+
+Batch 1390, train_perplexity=555.40173, train_loss=6.3196917
+
+Batch 1400, train_perplexity=496.23868, train_loss=6.207057
+
+Batch 1410, train_perplexity=571.9115, train_loss=6.3489842
+
+Batch 1420, train_perplexity=602.94037, train_loss=6.4018183
+
+Batch 1430, train_perplexity=551.0217, train_loss=6.3117743
+
+Batch 1440, train_perplexity=601.9154, train_loss=6.400117
+
+Batch 1450, train_perplexity=482.49973, train_loss=6.1789804
+
+Batch 1460, train_perplexity=555.5845, train_loss=6.3200207
+
+Batch 1470, train_perplexity=506.17233, train_loss=6.226877
+
+Batch 1480, train_perplexity=586.53326, train_loss=6.3742294
+
+Batch 1490, train_perplexity=561.3297, train_loss=6.3303084
+
+Batch 1500, train_perplexity=565.6179, train_loss=6.3379188
+
+Batch 1510, train_perplexity=543.6525, train_loss=6.2983103
+
+Batch 1520, train_perplexity=587.40796, train_loss=6.3757195
+
+Batch 1530, train_perplexity=584.2901, train_loss=6.3703976
+
+Batch 1540, train_perplexity=541.09216, train_loss=6.2935896
+
+Batch 1550, train_perplexity=530.7358, train_loss=6.2742643
+
+Batch 1560, train_perplexity=535.2367, train_loss=6.282709
+
+Batch 1570, train_perplexity=579.6361, train_loss=6.3624005
+
+Batch 1580, train_perplexity=524.7372, train_loss=6.2628975
+
+Batch 1590, train_perplexity=582.2173, train_loss=6.3668437
+
+Batch 1600, train_perplexity=575.47015, train_loss=6.3551874
+
+Batch 1610, train_perplexity=499.00253, train_loss=6.212611
+
+Batch 1620, train_perplexity=553.9375, train_loss=6.317052
+
+Batch 1630, train_perplexity=499.88348, train_loss=6.214375
+
+Batch 1640, train_perplexity=520.64667, train_loss=6.2550716
+
+Batch 1650, train_perplexity=491.79358, train_loss=6.198059
+
+Batch 1660, train_perplexity=541.77527, train_loss=6.2948513
+
+Batch 1670, train_perplexity=505.84515, train_loss=6.2262306
+
+Batch 1680, train_perplexity=534.11725, train_loss=6.2806153
+
+Batch 1690, train_perplexity=524.9539, train_loss=6.2633104
+
+Batch 1700, train_perplexity=481.93292, train_loss=6.177805
+
+Batch 1710, train_perplexity=564.6459, train_loss=6.336199
+
+Batch 1720, train_perplexity=507.56015, train_loss=6.229615
+
+Batch 1730, train_perplexity=543.4174, train_loss=6.297878
+
+Batch 1740, train_perplexity=532.746, train_loss=6.2780447
+
+Batch 1750, train_perplexity=500.26596, train_loss=6.21514
+
+Batch 1760, train_perplexity=544.5954, train_loss=6.300043
+
+Batch 1770, train_perplexity=478.1059, train_loss=6.169832
+
+Batch 1780, train_perplexity=543.56024, train_loss=6.2981405
+
+Batch 1790, train_perplexity=527.87445, train_loss=6.2688584
+
+Batch 1800, train_perplexity=480.07877, train_loss=6.17395
+
+Batch 1810, train_perplexity=524.3812, train_loss=6.262219
+
+Batch 1820, train_perplexity=548.0419, train_loss=6.3063517
+
+Batch 1830, train_perplexity=510.67578, train_loss=6.235735
+
+Batch 1840, train_perplexity=508.36624, train_loss=6.231202
+
+Batch 1850, train_perplexity=502.07715, train_loss=6.218754
+
+Batch 1860, train_perplexity=486.8123, train_loss=6.1878786
+
+Batch 1870, train_perplexity=495.05743, train_loss=6.204674
+
+Batch 1880, train_perplexity=493.03757, train_loss=6.2005854

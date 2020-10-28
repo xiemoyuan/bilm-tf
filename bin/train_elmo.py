@@ -34,17 +34,17 @@ def main(args):
        [7, 1024]],
       'max_characters_per_token': 50,
       'n_characters': 261,
-      'n_highway': 2},
+      'n_highway': 0},
     
      'dropout': 0.1,
     
      'lstm': {
       'cell_clip': 3,
-      'dim': 4096,
-      'n_layers': 2,
+      'dim': 512,
+      'n_layers': 1,
       'proj_clip': 3,
       'projection_dim': 512,
-      'use_skip_connections': True},
+      'use_skip_connections': False},
     
      'all_clip_norm_val': 10.0,
     

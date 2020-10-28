@@ -371,9 +371,12 @@ class LanguageModel(object):
                         lstm_dim, num_proj=projection_dim,
                         cell_clip=cell_clip, proj_clip=proj_clip)
                 else:
+                    """
                     lstm_cell = tf.nn.rnn_cell.LSTMCell(
                         lstm_dim,
                         cell_clip=cell_clip, proj_clip=proj_clip)
+                    """
+                    lstm_cell = tf.nn.rnn_cell.LSTMCell(lstm_dim)
 
                 if use_skip_connections:
                     # ResidualWrapper adds inputs to outputs
@@ -386,9 +389,11 @@ class LanguageModel(object):
                         lstm_cell = tf.nn.rnn_cell.ResidualWrapper(lstm_cell)
 
                 # add dropout
+                """
                 if self.is_training:
                     lstm_cell = tf.nn.rnn_cell.DropoutWrapper(lstm_cell,
                         input_keep_prob=keep_prob)
+                """
 
                 lstm_cells.append(lstm_cell)
 
@@ -397,6 +402,7 @@ class LanguageModel(object):
             else:
                 lstm_cell = lstm_cells[0]
 
+            #TODO Mark
             with tf.control_dependencies([lstm_input]):
                 self.init_lstm_state.append(
                     lstm_cell.zero_state(batch_size, DTYPE))
@@ -419,10 +425,14 @@ class LanguageModel(object):
             # (batch_size * unroll_steps, 512)
             lstm_output_flat = tf.reshape(
                 tf.stack(_lstm_output_unpacked, axis=1), [-1, projection_dim])
+            
+            """
             if self.is_training:
                 # add dropout to output
                 lstm_output_flat = tf.nn.dropout(lstm_output_flat,
                     keep_prob)
+            """
+            
             tf.add_to_collection('lstm_output_embeddings',
                 _lstm_output_unpacked)
 
@@ -498,6 +508,7 @@ class LanguageModel(object):
             next_token_id_flat = tf.reshape(id_placeholder, [-1, 1])
 
             with tf.control_dependencies([lstm_output_flat]):
+                """
                 if self.is_training and self.sample_softmax:
                     losses = tf.nn.sampled_softmax_loss(
                                    self.softmax_W, self.softmax_b,
@@ -519,6 +530,18 @@ class LanguageModel(object):
                         logits=output_scores,
                         labels=tf.squeeze(next_token_id_flat, squeeze_dims=[1])
                     )
+                """
+                output_scores = tf.matmul(
+                    lstm_output_flat,
+                    tf.transpose(self.softmax_W)
+                ) + self.softmax_b
+                # NOTE: tf.nn.sparse_softmax_cross_entropy_with_logits
+                #   expects unnormalized output since it performs the
+                #   softmax internally
+                losses = tf.nn.sparse_softmax_cross_entropy_with_logits(
+                    logits=output_scores,
+                    labels=tf.squeeze(next_token_id_flat, squeeze_dims=[1])
+                )
 
             self.individual_losses.append(tf.reduce_mean(losses))
 
@@ -688,14 +711,20 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
 
         # set up the optimizer
         lr = options.get('learning_rate', 0.2)
+        #"""
         opt = tf.train.AdagradOptimizer(learning_rate=lr,
                                         initial_accumulator_value=1.0)
+        #"""
+        #opt = tf.train.AdamOptimizer(learning_rate=0.01)
 
         # calculate the gradients on each GPU
         tower_grads = []
         models = []
         train_perplexity = tf.get_variable(
             'train_perplexity', [],
+            initializer=tf.constant_initializer(0.0), trainable=False)
+        train_loss = tf.get_variable(
+            'train_loss', [],
             initializer=tf.constant_initializer(0.0), trainable=False)
         norm_summaries = []
         for k in range(n_gpus):
@@ -715,14 +744,15 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
                     tower_grads.append(grads)
                     # keep track of loss across all GPUs
                     train_perplexity += loss
+                    train_loss += loss
                     #train_perplexity = tf.print(train_perplexity, ['add: ', train_perplexity])
 
         print_variable_summary()
 
         # calculate the mean of each gradient across all GPUs
         grads = average_gradients(tower_grads, options['batch_size'], options)
-        grads, norm_summary_ops = clip_grads(grads, options, True, global_step)
-        norm_summaries.extend(norm_summary_ops)
+        #grads, norm_summary_ops = clip_grads(grads, options, True, global_step)
+        #norm_summaries.extend(norm_summary_ops)
 
         # log the training perplexity
         train_perplexity = tf.exp(train_perplexity / n_gpus)
@@ -838,11 +868,17 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
 
         t1 = time.time()
         data_gen = data.iter_batches(batch_size * n_gpus, unroll_steps)
-        for batch_no, batch in enumerate(data_gen, start=1):
+        for batch_no, batch in enumerate(data_gen):
 
             # slice the input in the batch for the feed_dict
             X = batch
-            if batch_no % 10 == 0: print(X['next_token_id'])
+            """
+            if batch_no % 200 == 0: 
+                print('ids:\n', X['tokens_characters'])
+                print('next_ids:\n', X['next_token_id'])
+                print('ids_reverse:\n', X['tokens_characters_reverse'])
+                print('next_ids_reverse:\n', X['next_token_id_reverse'])
+            """
 
             feed_dict = {t: v for t, v in zip(
                                         init_state_tensors, init_state_values)}
@@ -861,7 +897,7 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
             #   state tensors, token ids and next token ids
             if batch_no % 1250 != 0:
                 ret = sess.run(
-                    [train_op, summary_op, train_perplexity] +
+                    [train_op, summary_op, train_perplexity, train_loss] +
                                                 final_state_tensors,
                     feed_dict=feed_dict
                 )
@@ -871,23 +907,23 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
                 # last entries are the final states -- set them to
                 # init_state_values
                 # for next batch
-                init_state_values = ret[3:]
+                init_state_values = ret[4:]
 
             else:
                 # also run the histogram summaries
                 ret = sess.run(
-                    [train_op, summary_op, train_perplexity, hist_summary_op] + 
+                    [train_op, summary_op, train_perplexity, train_loss, hist_summary_op] + 
                                                 final_state_tensors,
                     feed_dict=feed_dict
                 )
-                init_state_values = ret[4:]                
+                init_state_values = ret[5:]                
 
             if batch_no % 1250 == 0:
-                summary_writer.add_summary(ret[3], batch_no)
+                summary_writer.add_summary(ret[4], batch_no)
             if batch_no % 10 == 0:
                 # write the summaries to tensorboard and display perplexity
                 summary_writer.add_summary(ret[1], batch_no)
-                print("Batch %s, train_perplexity=%s\n" % (batch_no, ret[2]))
+                print("Batch %s, train_perplexity=%s, train_loss=%s\n" % (batch_no, ret[2], ret[3]))
                 #print("Total time: %s" % (time.time() - t1))
 
             if (batch_no % 1250 == 0) or (batch_no == n_batches_total):
