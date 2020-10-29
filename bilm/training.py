@@ -711,11 +711,12 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
 
         # set up the optimizer
         lr = options.get('learning_rate', 0.2)
-        #"""
+        """
         opt = tf.train.AdagradOptimizer(learning_rate=lr,
                                         initial_accumulator_value=1.0)
         #"""
         #opt = tf.train.AdamOptimizer(learning_rate=0.01)
+        opt = tf.train.GradientDescentOptimizer(learning_rate=0.001)
 
         # calculate the gradients on each GPU
         tower_grads = []
@@ -868,10 +869,12 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
 
         t1 = time.time()
         data_gen = data.iter_batches(batch_size * n_gpus, unroll_steps)
+        single_data = next(data_gen)
         for batch_no, batch in enumerate(data_gen):
 
             # slice the input in the batch for the feed_dict
-            X = batch
+            #X = batch
+            X = single_data
             """
             if batch_no % 200 == 0: 
                 print('ids:\n', X['tokens_characters'])
