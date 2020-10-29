@@ -10,11 +10,13 @@ from bilm.data import BidirectionalLMDataset
 
 
 def main(args):
+    max_characters_per_token = 20
+
     # load the vocab
-    vocab = load_vocab(args.vocab_file, 50)
+    vocab = load_vocab(args.vocab_file, max_characters_per_token)
 
     # define the options
-    batch_size = 128  # batch size for each GPU
+    batch_size = 1  # batch size for each GPU
     n_gpus = 1
 
     # number of tokens in training data (this for 1B Word Benchmark)
@@ -32,7 +34,7 @@ def main(args):
        [5, 256],
        [6, 512],
        [7, 1024]],
-      'max_characters_per_token': 50,
+      'max_characters_per_token': max_characters_per_token,
       'n_characters': 261,
       'n_highway': 0},
     
@@ -40,10 +42,10 @@ def main(args):
     
      'lstm': {
       'cell_clip': 3,
-      'dim': 512,
+      'dim': 64,
       'n_layers': 1,
       'proj_clip': 3,
-      'projection_dim': 512,
+      'projection_dim': 64,
       'use_skip_connections': False},
     
      'all_clip_norm_val': 10.0,
@@ -52,7 +54,7 @@ def main(args):
      'n_train_tokens': n_train_tokens,
      'batch_size': batch_size,
      'n_tokens_vocab': vocab.size,
-     'unroll_steps': 20,
+     'unroll_steps': 10,
      'n_negative_samples_batch': 8192,
     }
 
