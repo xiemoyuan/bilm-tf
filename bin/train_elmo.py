@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/docker/Upgrade_ELMo/bilm-tf')
+sys.path.append('/docker/ELMo/bilm-tf')
 
 import argparse
 
@@ -34,14 +34,14 @@ def main(args):
        [7, 1024]],
       'max_characters_per_token': 50,
       'n_characters': 261,
-      'n_highway': 0},
+      'n_highway': 2},
     
      'dropout': 0.1,
     
      'lstm': {
       'cell_clip': 3,
       'dim': 512,
-      'n_layers': 1,
+      'n_layers': 2,
       'proj_clip': 3,
       'projection_dim': 512,
       'use_skip_connections': False},

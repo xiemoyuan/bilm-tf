@@ -389,11 +389,9 @@ class LanguageModel(object):
                         lstm_cell = tf.nn.rnn_cell.ResidualWrapper(lstm_cell)
 
                 # add dropout
-                """
                 if self.is_training:
                     lstm_cell = tf.nn.rnn_cell.DropoutWrapper(lstm_cell,
                         input_keep_prob=keep_prob)
-                """
 
                 lstm_cells.append(lstm_cell)
 
@@ -426,12 +424,10 @@ class LanguageModel(object):
             lstm_output_flat = tf.reshape(
                 tf.stack(_lstm_output_unpacked, axis=1), [-1, projection_dim])
             
-            """
             if self.is_training:
                 # add dropout to output
                 lstm_output_flat = tf.nn.dropout(lstm_output_flat,
                     keep_prob)
-            """
             
             tf.add_to_collection('lstm_output_embeddings',
                 _lstm_output_unpacked)
@@ -716,6 +712,7 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
                                         initial_accumulator_value=1.0)
         #"""
         #opt = tf.train.AdamOptimizer(learning_rate=0.01)
+        #opt = tf.train.GradientDescentOptimizer(learning_rate=0.01)
 
         # calculate the gradients on each GPU
         tower_grads = []
@@ -738,7 +735,8 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
                     models.append(model)
                     # get gradients
                     grads = opt.compute_gradients(
-                        loss * options['unroll_steps'],
+                        #loss * options['unroll_steps'],
+                        loss,
                         aggregation_method=tf.AggregationMethod.EXPERIMENTAL_TREE,
                     )
                     tower_grads.append(grads)
@@ -751,8 +749,8 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
 
         # calculate the mean of each gradient across all GPUs
         grads = average_gradients(tower_grads, options['batch_size'], options)
-        #grads, norm_summary_ops = clip_grads(grads, options, True, global_step)
-        #norm_summaries.extend(norm_summary_ops)
+        grads, norm_summary_ops = clip_grads(grads, options, True, global_step)
+        norm_summaries.extend(norm_summary_ops)
 
         # log the training perplexity
         train_perplexity = tf.exp(train_perplexity / n_gpus)
@@ -798,6 +796,8 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
     with tf.Session(config=tf.ConfigProto(
             allow_soft_placement=True)) as sess:
         sess.run(init)
+
+        #import pdb;pdb.set_trace()
 
         # load the checkpoint data if needed
         if restart_ckpt_file is not None:
@@ -917,6 +917,8 @@ def train(options, data, n_gpus, tf_save_dir, tf_log_dir,
                     feed_dict=feed_dict
                 )
                 init_state_values = ret[5:]                
+
+            #import pdb;pdb.set_trace()
 
             if batch_no % 1250 == 0:
                 summary_writer.add_summary(ret[4], batch_no)
